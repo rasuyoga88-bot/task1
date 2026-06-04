@@ -33,7 +33,6 @@ public class sauceautomation {
     @Test(priority = 1)
     public void testFlow1_ValidLoginAndCheckout() {
 
-        // ── Login ──────────────────────────────────────────────────────────
         driver.get(baseUrl);
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
@@ -43,14 +42,12 @@ public class sauceautomation {
                 ExpectedConditions.visibilityOfElementLocated(By.className("title")));
         Assert.assertEquals(title.getText(), "Products");
 
-        // ── Add products to cart ───────────────────────────────────────────
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
         driver.findElement(By.id("add-to-cart-sauce-labs-bike-light")).click();
 
         WebElement badge = driver.findElement(By.className("shopping_cart_badge"));
         Assert.assertEquals(badge.getText(), "2");
 
-        // ── Open cart ──────────────────────────────────────────────────────
         driver.findElement(By.className("shopping_cart_link")).click();
 
         WebElement cartTitle = wait.until(
@@ -62,7 +59,6 @@ public class sauceautomation {
         Assert.assertTrue(
                 driver.findElement(By.xpath("//div[text()='Sauce Labs Bike Light']")).isDisplayed());
 
-        // ── Checkout Step 1: Info ──────────────────────────────────────────
         driver.findElement(By.id("checkout")).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("title")));
@@ -72,12 +68,10 @@ public class sauceautomation {
         driver.findElement(By.id("postal-code")).sendKeys("600001");
         driver.findElement(By.id("continue")).click();
 
-        // ── Checkout Step 2: Overview ──────────────────────────────────────
         WebElement overviewTitle = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.className("title")));
         Assert.assertEquals(overviewTitle.getText(), "Checkout: Overview");
 
-        // ── Finish order ───────────────────────────────────────────────────
         driver.findElement(By.id("finish")).click();
 
         WebElement completeTitle = wait.until(
